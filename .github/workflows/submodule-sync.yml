@@ -28,7 +28,9 @@ jobs:
     - name: Git Sumbodule Update
       run: |
         git pull --recurse-submodules
-        git submodule update --remote --recursive --init
+        git submodule sync --recursive
+        git submodule update --remote --recursive --init --checkout $(git describe --tags --abbrev=0)
+        #git submodule update --remote --recursive --init
         #git submodule foreach -q --recursive 'branch="$(git config -f $toplevel/.gitmodules submodule.$name.branch)"; git switch $branch'
 
     - name: Commit update
