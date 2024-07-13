@@ -31,8 +31,10 @@ jobs:
         #git submodule sync --recursive
         #git submodule update --remote --recursive --init --checkout $(git describe --tags --abbrev=0)
         git submodule update --remote --recursive
-        cd tailscale
-        git checkout v1.68.2
+        git -C <submodule_path> fetch --tags
+        latest_tag=$(git -C <submodule_path> describe --tags --abbrev=0)
+        git -C <submodule_path> checkout $latest_tag
+        
         #git submodule foreach -q --recursive 'branch="$(git config -f $toplevel/.gitmodules submodule.$name.branch)"; git switch $branch'
 
     - name: Commit update
