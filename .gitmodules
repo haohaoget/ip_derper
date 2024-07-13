@@ -1,4 +1,5 @@
 [submodule "tailscale"]
 	path = tailscale
 	url = https://github.com/tailscale/tailscale
-	branch = releases/latest
+	branch = refs/tags/latest
+	shallow = true
