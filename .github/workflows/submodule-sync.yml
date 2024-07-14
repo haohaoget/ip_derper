@@ -34,10 +34,11 @@ jobs:
         git -C tailscale fetch --tags
         
         git -C tailscale checkout v1.68.2
-        latest_tag=$(git -C tailscale describe --always --tags --abbrev=0)
-        echo $(latest_tag)
-        
-        #git submodule foreach -q --recursive 'branch="$(git config -f $toplevel/.gitmodules submodule.$name.branch)"; git switch $branch'
+        #获取最新版本tag
+        LatestTag=$(git describe --tags `git rev-list --tags --max-count=1`)
+        echo -e "最新版本tag......"
+        echo -e "$LatestTag"
+
 
     - name: Commit update
       run: |
