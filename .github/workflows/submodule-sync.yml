@@ -35,7 +35,7 @@ jobs:
         
         git -C tailscale checkout v1.68.2
         #获取最新版本tag
-        LatestTag=$(git describe --tags `git rev-list --tags --max-count=1`)
+        LatestTag=$(git tag -n --sort=-taggerdate | head -n 1)
         echo -e "最新版本tag......"
         echo -e "$LatestTag"
 
