@@ -33,7 +33,7 @@ jobs:
         git submodule update --remote --recursive
         git -C tailscale fetch --tags
         
-        git -C tailscale checkout v1.68.2
+        git -C tailscale checkout v1.70.0
         #获取最新版本tag
         LatestTag=$(git tag -n --sort=-taggerdate | head -n 1)
         echo -e "最新版本tag......"
