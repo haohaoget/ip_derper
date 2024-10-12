@@ -8,6 +8,11 @@ on:
   #- cron: "0 2 * * *"
   # Allows you to run this workflow manually from the Actions tab or through HTTP API
   workflow_dispatch:
+    inputs:
+        ssh:
+          description: 'SSH connection to Actions'
+          required: false
+          default: 'false'
 
 jobs:
   sync:
@@ -26,7 +31,11 @@ jobs:
       with:
         token: ${{ secrets.TOKEN }}
         submodules: true
-
+        
+    - name: SSH 连接到 Actions
+      uses: P3TERX/ssh2actions@main
+      if: (github.event.inputs.ssh == 'true') || contains(github.event.action, 'ssh')
+      
     # Update references
     - name: Git Sumbodule Update
       run: |
