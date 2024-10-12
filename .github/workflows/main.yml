@@ -3,8 +3,10 @@ name: Disable Checking ServerName
 on:
   workflow_dispatch:
   push:
+    branches:
+      - main  # 监测 main 分支的推送
     paths:
-      - 'tailscale/**'
+      - 'tailscale/**'  # 仅在 tailscale 子模块的内容发生变化时触发
 
 jobs:
   deploy:
