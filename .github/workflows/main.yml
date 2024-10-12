@@ -5,8 +5,8 @@ on:
   push:
     branches:
       - main  # 监测 main 分支的推送
-    paths:
-      - 'tailscale/**'  # 仅在 tailscale 子模块的内容发生变化时触发
+    paths-ignore:
+      - '.github/workflows/**'  # 忽略 .github/workflows 目录下的所有文件
 
 jobs:
   deploy:
