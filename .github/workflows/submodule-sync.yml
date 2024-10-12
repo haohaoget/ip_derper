@@ -43,9 +43,9 @@ jobs:
         #git submodule sync --recursive
         #git submodule update --remote --recursive --init --checkout $(git describe --tags --abbrev=0)
         git submodule update --remote --recursive
-        git -C tailscale fetch --tags
+        # git -C tailscale fetch --tags
         cd tailscale
-        #获取最新版本tag
+        #获取非pre的最新版本tag
         LatestTag=$(git tag --sort=-creatordate | grep -v "pre" | head -n 1)
         echo -e "最新版本tag......"
         echo -e "$LatestTag"
