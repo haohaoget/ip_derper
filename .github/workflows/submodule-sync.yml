@@ -1,11 +1,11 @@
 name: 'Submodules Sync'
 
 on:
-  push:
-      paths:
-        - '.github/workflows/submodule-sync.yml'
-  #schedule:
-  #- cron: "0 2 * * *"
+  # push:
+  #     paths:
+  #       - '.github/workflows/submodule-sync.yml'
+  schedule:
+  - cron: "0 2 * * *"
   # Allows you to run this workflow manually from the Actions tab or through HTTP API
   workflow_dispatch:
     inputs:
@@ -44,12 +44,14 @@ jobs:
         #git submodule update --remote --recursive --init --checkout $(git describe --tags --abbrev=0)
         git submodule update --remote --recursive
         git -C tailscale fetch --tags
-        
-        git -C tailscale checkout v1.76.0
+        cd tailscale
         #获取最新版本tag
-        LatestTag=$(git tag -n --sort=-taggerdate | head -n 1)
+        LatestTag=$(git tag --sort=-creatordate | grep -v "pre" | head -n 1)
         echo -e "最新版本tag......"
         echo -e "$LatestTag"
+        cd ..
+        git -C tailscale checkout "$LatestTag"
+        
 
 
     - name: Commit update
