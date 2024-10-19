@@ -46,6 +46,7 @@ jobs:
         # git -C tailscale fetch --tags
         cd tailscale
         #获取非pre的最新版本tag
+        git fetch --tags
         LatestTag=$(git tag --sort=-creatordate | grep -v "pre" | head -n 1)
         echo -e "最新版本tag......"
         echo -e "$LatestTag"
