@@ -61,4 +61,6 @@ jobs:
           tags: |
             haohaodc/ip_derper:${{ env.tag }}
             ghcr.io/haohaoget/ip_derper:${{ env.tag }}
+            haohaodc/ip_derper:latest
+            ghcr.io/haohaoget/ip_derper:latest
 
