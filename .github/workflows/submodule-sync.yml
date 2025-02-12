@@ -39,15 +39,20 @@ jobs:
     # Update references
     - name: Git Sumbodule Update
       run: |
+        # 更新主仓库代码的同时保证子模块同样更新到仓库记录的状态
         git pull --recurse-submodules
         #git submodule sync --recursive
         #git submodule update --remote --recursive --init --checkout $(git describe --tags --abbrev=0)
+        # 让子模块直接从它们各自的远程仓库拉取最新代码，并支持更新嵌套子模块
         git submodule update --remote --recursive
         # git -C tailscale fetch --tags
         cd tailscale
         #获取非pre的最新版本tag
-        git fetch --tags
-        LatestTag=$(git tag --sort=-creatordate | grep -v "pre" | head -n 1)
+        # git fetch --tags
+        # LatestTag=$(git tag --sort=-creatordate | grep -v "pre" | head -n 1)
+        LatestTag=$(curl -s https://api.github.com/repos/tailscale/tailscale/releases | jq -r '.[] | select(.tag_name | contains("-pre") | not) | .tag_name' | head -n 1)
+        # 截取第二个
+        # LatestTag=$(curl -s https://api.github.com/repos/tailscale/tailscale/releases | jq -r '.[] | select(.tag_name | contains("-pre") | not) | .tag_name' | head -n 2 | tail -n 1)
         echo -e "最新版本tag......"
         echo -e "$LatestTag"
         cd ..
