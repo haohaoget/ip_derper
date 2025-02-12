@@ -48,15 +48,24 @@ jobs:
         # git -C tailscale fetch --tags
         cd tailscale
         #获取非pre的最新版本tag
-        # git fetch --tags
         # LatestTag=$(git tag --sort=-creatordate | grep -v "pre" | head -n 1)
         LatestTag=$(curl -s https://api.github.com/repos/tailscale/tailscale/releases | jq -r '.[] | select(.tag_name | contains("-pre") | not) | .tag_name' | head -n 1)
         # 截取第二个
         # LatestTag=$(curl -s https://api.github.com/repos/tailscale/tailscale/releases | jq -r '.[] | select(.tag_name | contains("-pre") | not) | .tag_name' | head -n 2 | tail -n 1)
-        echo -e "最新版本tag......"
-        echo -e "$LatestTag"
+        # 拉取所有远程 tag
+        git fetch --tags
+    
+        # 检查 tag 是否存在
+        if git rev-parse "$LatestTag" >/dev/null 2>&1; then
+          echo "切换到 tag: $LatestTag"
+          git checkout "$LatestTag"
+        else
+          echo "错误: tag '$LatestTag' 不存在！"
+          exit 1
+        fi
+    
         cd ..
-        git -C tailscale checkout "$LatestTag"
+        # git -C tailscale checkout "$LatestTag"
         
 
 
