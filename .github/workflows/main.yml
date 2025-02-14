@@ -46,9 +46,9 @@ jobs:
           cd tailscale
           # git fetch --tags
           # LatestTag=$(git tag --sort=-creatordate | grep -v "pre" | head -n 1)
-          # LatestTag=$(curl -s https://api.github.com/repos/tailscale/tailscale/releases | jq -r '.[] | select(.tag_name | contains("-pre") | not) | .tag_name' | head -n 1)
+          LatestTag=$(curl -s https://api.github.com/repos/tailscale/tailscale/releases | jq -r '.[] | select(.tag_name | contains("-pre") | not) | .tag_name' | head -n 1)
           # 截取第二个
-          LatestTag=$(curl -s https://api.github.com/repos/tailscale/tailscale/releases | jq -r '.[] | select(.tag_name | contains("-pre") | not) | .tag_name' | head -n 2 | tail -n 1)
+          # LatestTag=$(curl -s https://api.github.com/repos/tailscale/tailscale/releases | jq -r '.[] | select(.tag_name | contains("-pre") | not) | .tag_name' | head -n 2 | tail -n 1)
           echo "最新版本tag: $LatestTag"
           # 将变量写入GITHUB_OUTPUT，供后续步骤使用
           echo "tag=$LatestTag" >> $GITHUB_ENV
